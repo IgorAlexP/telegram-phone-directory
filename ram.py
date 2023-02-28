@@ -51,6 +51,7 @@ def help_message(message):
 /search_contact - найти контакт по имени
 /show_contacts - вывести список контактов
 /delete_contact - удалить контакт
+/start - можешь вольспользоваться этой командой для отображения меню
 """
     bot.reply_to(message, text)
 
