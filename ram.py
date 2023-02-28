@@ -35,10 +35,10 @@ def start_message(message):
 @bot.message_handler(commands=['start'])
 def start_message(message):
     markup = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
-    add_contact_button = telebot.types.KeyboardButton('/add_contact')
-    search_contact_button = telebot.types.KeyboardButton('/search_contact')
-    show_contacts_button = telebot.types.KeyboardButton('/show_contacts')
-    delete_contact_button = telebot.types.KeyboardButton('/delete_contact')
+    add_contact_button = telebot.types.KeyboardButton('/Добавить_контакт')
+    search_contact_button = telebot.types.KeyboardButton('/Найти_контакт')
+    show_contacts_button = telebot.types.KeyboardButton('/Все_контакты')
+    delete_contact_button = telebot.types.KeyboardButton('/Удалить_контакт')
     markup.row(add_contact_button, search_contact_button)
     markup.row(show_contacts_button, delete_contact_button)
     bot.reply_to(message, "Привет! Я бот для хранения твоих контактов. Нажми на одну из кнопок, чтобы выбрать действие.", reply_markup=markup)   
@@ -56,7 +56,7 @@ def help_message(message):
     bot.reply_to(message, text)
 
 # обработчик команды /add_contact
-@bot.message_handler(commands=['add_contact'])
+@bot.message_handler(commands=['Добавить_контакт'])
 def add_contact_message(message):
     bot.reply_to(message, "Напишите имя и номер телефона контакта через пробел")
     bot.register_next_step_handler(message, add_contact)
@@ -75,7 +75,7 @@ def add_contact(message):
     bot.reply_to(message, f"Контакт {name} добавлен")
 
 # обработчик команды /search_contact
-@bot.message_handler(commands=['search_contact'])
+@bot.message_handler(commands=['Найти_контакт'])
 def search_contact_message(message):
     bot.reply_to(message, "Напишите имя контакта")
     bot.register_next_step_handler(message, search_contact)
@@ -90,7 +90,7 @@ def search_contact(message):
         bot.reply_to(message, f"Контакт {name} не найден")
         
 # обработчик команды /show_contacts
-@bot.message_handler(commands=['show_contacts'])
+@bot.message_handler(commands=['Все_контакты'])
 def show_contacts_message(message):
     if len(contacts) == 0:
         bot.reply_to(message, "Список контактов пуст")
@@ -101,7 +101,7 @@ def show_contacts_message(message):
         bot.reply_to(message, text)
         
 # обработчик команды /delete_contact
-@bot.message_handler(commands=['delete_contact'])
+@bot.message_handler(commands=['Удалить_контакт'])
 def delete_contact_message(message):
     bot.reply_to(message, "Напишите имя контакта")
     bot.register_next_step_handler(message, delete_contact)
