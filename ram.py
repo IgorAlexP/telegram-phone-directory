@@ -25,11 +25,24 @@ bot = telebot.TeleBot(TOKEN)
 with open("contacts.json", "r") as f:
     contacts = json.load(f)
 
-# обработчик команды /start
+"""# обработчик команды /start
 @bot.message_handler(commands=['start'])
 def start_message(message):
     bot.reply_to(message, "Привет! Я бот для хранения твоих контактов. Напиши /help, чтобы узнать мои команды.")
+    """
 
+# обработчик команды /start
+@bot.message_handler(commands=['start'])
+def start_message(message):
+    markup = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
+    add_contact_button = telebot.types.KeyboardButton('/add_contact')
+    search_contact_button = telebot.types.KeyboardButton('/search_contact')
+    show_contacts_button = telebot.types.KeyboardButton('/show_contacts')
+    delete_contact_button = telebot.types.KeyboardButton('/delete_contact')
+    markup.row(add_contact_button, search_contact_button)
+    markup.row(show_contacts_button, delete_contact_button)
+    bot.reply_to(message, "Привет! Я бот для хранения твоих контактов. Нажми на одну из кнопок, чтобы выбрать действие.", reply_markup=markup)   
+   
 # обработчик команды /help
 @bot.message_handler(commands=['help'])
 def help_message(message):
