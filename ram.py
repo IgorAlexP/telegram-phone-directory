@@ -37,6 +37,7 @@ def help_message(message):
 /add_contact - добавить контакт
 /search_contact - найти контакт по имени
 /show_contacts - вывести список контактов
+/delete_contact - удалить контакт
 """
     bot.reply_to(message, text)
 
@@ -84,6 +85,24 @@ def show_contacts_message(message):
         for name, phone in contacts.items():
             text += f"{name}: {phone}\n"
         bot.reply_to(message, text)
+        
+# обработчик команды /delete_contact
+@bot.message_handler(commands=['delete_contact'])
+def delete_contact_message(message):
+    bot.reply_to(message, "Напишите имя контакта")
+    bot.register_next_step_handler(message, delete_contact)
+
+# функция удаления контакта
+def delete_contact(message):
+    name = message.text
+    if name in contacts:
+        del contacts[name]
+        with open("contacts.json", "w") as f:
+            json.dump(contacts, f)
+        bot.reply_to(message, f"Контакт {name} удален")
+    else:
+        bot.reply_to(message, f"Контакт {name} не найден")
+
 
 
 
