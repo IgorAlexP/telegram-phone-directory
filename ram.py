@@ -50,8 +50,11 @@ def add_contact_message(message):
 def add_contact(message):
     contact_info = message.text.split(" ")
     name = contact_info[0]
-    phone = contact_info[1]
-    contacts[name] = phone
+    phones = contact_info[1:]
+    if name in contacts:
+        contacts[name].extend(phones)
+    else:
+        contacts[name] = phones
     with open("contacts.json", "w") as f:
         json.dump(contacts, f)
     bot.reply_to(message, f"Контакт {name} добавлен")
